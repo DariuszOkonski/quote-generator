@@ -6,14 +6,30 @@ const quoteText = document.getElementById("quote");
 const authorText = document.getElementById("author");
 const twitterBtn = document.getElementById("twitter");
 const newQuoteBtn = document.getElementById("new-quote");
+const loader = document.getElementById("loader");
 
 const charactersLimit = 100;
 // get quote from api
+
+// show loading
+function loading() {
+    loader.hidden = false;
+    quoteContainer.hidden = true;
+}
+
+// hide loading 
+function complete() {
+    if(!loader.hidden) {
+        loader.hidden = true;
+        quoteContainer.hidden = false;
+    }
+}
 
 async function getQuote() {
     // const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     // const proxyUrl = 'https://afternoon-hollows-80162.herokuapp.com/';
     // const apiUrl = 'http://api.forismatic.com/api/1.0/?method-getQuote&lang=en&format=json';
+    loading();
     const apiUrl = 'https://api.icndb.com/jokes/random';
     
     try {
@@ -34,7 +50,8 @@ async function getQuote() {
             quoteText.classList.remove('long-quote');
         }
         quoteText.innerText = data.value.joke;
-    
+        complete();
+
     } catch (error) {
         console.log('Whoops, no quote: ', error);
     }
@@ -57,5 +74,3 @@ twitterBtn.addEventListener('click', tweetQuote);
 
 // on load
 getQuote();
-
-
