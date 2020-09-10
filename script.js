@@ -1,6 +1,12 @@
 // http://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en
 // http://forismatic.com/en/api
 
+const quoteContainer = document.getElementById("quote-container");
+const quoteText = document.getElementById("quote");
+const authorText = document.getElementById("author");
+const twitterBtn = document.getElementById("twitter");
+const newQuote = document.getElementById("new-quote");
+
 // get quote from api
 
 async function getQuote() {
@@ -12,9 +18,17 @@ async function getQuote() {
     try {
         const response = await fetch(apiUrl);
         const data = await response.json();
-        console.log(data);
-        console.log(data.value.id);
-        console.log(data.value.joke);
+
+        // if author is blank, add Unknown
+        if(data.value.id === '') {
+            authorText.innerText = "Unknown";
+        } else {
+            authorText.innerText = data.value.id;
+        }
+
+
+
+        quoteText.innerText = data.value.joke;
     } catch (error) {
         console.log('Whoops, no quote: ', error);
     }
