@@ -26,9 +26,14 @@ async function getQuote() {
             authorText.innerText = data.value.id;
         }
 
-
-
+        // reduce font size for long quotes
+        if(data.value.joke.length > 100) {
+            quoteText.classList.add('long-quote');
+        } else {
+            quoteText.classList.remove('long-quote');
+        }
         quoteText.innerText = data.value.joke;
+    
     } catch (error) {
         console.log('Whoops, no quote: ', error);
     }
