@@ -11,14 +11,12 @@ const loader = document.getElementById("loader");
 const charactersLimit = 100;
 // get quote from api
 
-// show loading
-function loading() {
+function showLoadingSpinner() {
     loader.hidden = false;
     quoteContainer.hidden = true;
 }
 
-// hide loading 
-function complete() {
+function removeLoadingSpinner() {
     if(!loader.hidden) {
         loader.hidden = true;
         quoteContainer.hidden = false;
@@ -29,7 +27,7 @@ async function getQuote() {
     // const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     // const proxyUrl = 'https://afternoon-hollows-80162.herokuapp.com/';
     // const apiUrl = 'http://api.forismatic.com/api/1.0/?method-getQuote&lang=en&format=json';
-    loading();
+    showLoadingSpinner();
     const apiUrl = 'https://api.icndb.com/jokes/random';
     
     try {
@@ -50,7 +48,7 @@ async function getQuote() {
             quoteText.classList.remove('long-quote');
         }
         quoteText.innerText = data.value.joke;
-        complete();
+        removeLoadingSpinner();
 
     } catch (error) {
         console.log('Whoops, no quote: ', error);
